@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Report;
 
 class AdminController extends Controller
 {
@@ -26,6 +27,16 @@ class AdminController extends Controller
     public function index_exsum()
     {
         return view('admin.executive_summary');
+    }
+    public function laporankejadian_unverif()
+    {
+        $reports = Report::all(); 
+        return view('admin.laporankejadian.unverified.index', compact('reports'));
+    }
+    public function laporankejadian_verif()
+    {
+        $reports = Report::all();
+        return view('admin.laporankejadian.verified.index', compact('reports'));
     }
     public function assessment_unverif()
     {

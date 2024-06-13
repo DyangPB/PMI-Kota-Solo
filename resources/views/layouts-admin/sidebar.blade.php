@@ -1,36 +1,57 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav">
-          <li class="nav-item">
+    <ul class="nav">
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('admin-home') }}">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
+                <i class="mdi mdi-grid-large menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
             </a>
-          </li>
-          <li class="nav-item nav-category">Laporan</li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="menu-icon mdi mdi-floor-plan"></i>
-              <span class="menu-title">Assessment</span>
-              <i class="menu-arrow"></i> 
+        </li>
+        <li class="nav-item nav-category">Laporan</li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#collapse-laporankejadian" aria-expanded="false" aria-controls="collapse-laporankejadian">
+                <i class="menu-icon mdi mdi-floor-plan"></i>
+                <span class="menu-title">Laporan Kejadian</span>
+                <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{{ route('admin-assessment-unverif') }}">Unverified</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{{ route('admin-assessment-verif') }}">Verified</a></li>
-              </ul>
+            <div class="collapse" id="collapse-laporankejadian">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin-laporankejadian-unverif') }}">Unverified</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin-laporankejadian-verif') }}">Verified</a>
+                    </li>
+                </ul>
             </div>
-          </li>
-          <li class="nav-item">
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#collapse-assessment" aria-expanded="false" aria-controls="collapse-assessment">
+                <i class="menu-icon mdi mdi-floor-plan"></i>
+                <span class="menu-title">Assessment</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="collapse-assessment">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin-assessment-unverif') }}">Unverified</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('admin-assessment-verif') }}">Verified</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('admin-lapsit') }}">
-              <i class="menu-icon mdi mdi-file-document"></i>
-              <span class="menu-title">Laporan Situasi</span>
+                <i class="menu-icon mdi mdi-file-document"></i>
+                <span class="menu-title">Laporan Situasi</span>
             </a>
-          </li>
-          <li class="nav-item">
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="{{ route('admin-exsum') }}">
-              <i class="menu-icon mdi mdi-file-document"></i>
-              <span class="menu-title">Executive Summary</span>
+                <i class="menu-icon mdi mdi-file-document"></i>
+                <span class="menu-title">Executive Summary</span>
             </a>
-          </li>
-        </ul>
-      </nav>
+        </li>
+    </ul>
+</nav>

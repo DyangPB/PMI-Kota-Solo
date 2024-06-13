@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('tanggal_kejadian');
             $table->text('keterangan');
             $table->timestamp('timestamp_report');
-            $table->enum('status', ['On Process', 'Selesai', 'Belum Diverifikasi']);
+            $table->enum('status', ['On_Proses', 'Selesai', 'Belum_Diverifikasi']);
             $table->double('lokasi_longitude')->nullable();
             $table->double('lokasi_latitude')->nullable();
             $table->timestamps();

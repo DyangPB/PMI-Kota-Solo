@@ -10,23 +10,38 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Laporan Assessment</h4>
-
-                            <form class="forms-sample">
+                            @php
+                                $defaultDateTime = now()->format('Y-m-d');
+                            @endphp
+                            <form action="{{ route('store-laporankejadian') }}" method="POST" class="forms-sample">
                                 <div class="form-group">
-                                    <label for="kejadian_musibah">Kejadian Bencana</label>
-                                    <input type="text" class="form-control" id="kejadian_musibah" placeholder="Name">
+                                    <label for="id_jeniskejadian">Jenis Kejadian</label>
+                                    <select name="id_jeniskejadian" id="id_jeniskejadian" class="form-control form-control-sm" placeholder="- Pilih Jenis Kejadian -" required>
+                                        <option value="">- Pilih Jenis Kejadian -</option>
+                                        @foreach ($jeniskejadian as $jenis)
+                                        <option value="{{ $jenis-> id_jeniskejadian }}">{{ $jenis-> nama_kejadian }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                <!-- $jeniskejadian = JenisKejadian::all();
+                                $assess = Assessment::all();
+                                $mobilisasisd = MobilisasiSd::all();
+                                $giatpmi = GiatPMI::all();
+                                $narahubung = PersonilNarahubung::all();
+                                $petugasposko = PetuugasPosko::all(); -->
+                                <!-- Lokasi -->
                                 <div class="form-group">
                                     <label for="lokasi">Lokasi</label>
-                                    <input type="email" class="form-control" id="lokasi" placeholder="Email">
+                                    <input type="email" class="form-control" id="lokasi" placeholder="Lokasi">
                                 </div>
+                                <!-- Tanggal Kejadian -->
                                 <div class="form-group">
-                                    <label for="waktu_kejadian">Waktu Kejadian</label>
-                                    <input type="date" class="form-control" id="waktu_kejadian" placeholder="Password">
+                                    <label for="waktu_kejadian">Tanggal Kejadian</label>
+                                    <input type="date" class="form-control" id="tanggal_kejadian" placeholder="">
                                 </div>
                                 <div class="form-group">
                                     <label for="update">Update</label>
-                                    <input type="date" class="form-control" id="update" placeholder="Password">
+                                    <input type="date" class="form-control" id="update" value="{{ $defaultDateTime }}">
                                 </div>
                                 {{--  <div class="form-group">
                                     <label>File upload</label>
@@ -48,14 +63,14 @@
                                     </select>
                                 </div>  --}}
 
-                                <div class="form-group">
+                                <div class="form-group" id="akses_menuju_lokasi">
                                     <label>Keterangan Akses Menuju Lokasi</label>
                                     <select class="js-example-basic-single w-100">
                                         <option value="AL">Aman</option>
                                         <option value="WY">Tidak Aman</option>
                                     </select>
                                 </div>
-                                {{-- Inpu Dampak --}}
+                                {{-- Input Dampak --}}
                                 <div class="form-group">
                                     <button type="button" id="dampak" class="btn btn-primary me-2">Input Dampak</button>
                                 </div>

@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KejadianBencana;
+use App\Models\Assessment;
+use App\Models\MobilisasiSd;
+use App\Models\PersonilNarahubung;
+use App\Models\GiatPMI;
 use App\Models\Report;
+use App\Models\PetugasPosko;
 use App\Models\JenisKejadian;
-
 
 class RelawanController extends Controller
 {
@@ -22,8 +26,8 @@ class RelawanController extends Controller
     }
     public function index_laporankejadian()
     {
-        //
-        return view('relawan.laporankejadian.index');
+        $reports = Report::all(); 
+        return view('relawan.laporankejadian.index', compact('reports'));
     }
     public function index_lapsit()
     {
@@ -31,8 +35,8 @@ class RelawanController extends Controller
     }
     public function index_assessment()
     {
-        //
-        return view('relawan.assessment.index');
+        $assessments = KejadianBencana::all();
+        return view('relawan.assessment.index', compact('assessments'));
     }
     /**
      * Show the form for creating a new resource.
@@ -40,8 +44,8 @@ class RelawanController extends Controller
     // CREATE, UPDATE, DELETE LAPORAN KEJADIAN
     public function create_laporankejadian()
     {
-        //
-        return view('relawan.laporankejadian.create');
+        $jeniskejadian = JenisKejadian::all();
+        return view('relawan.laporankejadian.create', compact('jeniskejadian'));
     }
     public function edit_laporankejadian()
     {
@@ -60,13 +64,40 @@ class RelawanController extends Controller
             return redirect('relawan/laporan-kejadian')->with('error', 'Hanya laporan kejadian dengan status "Belum Diverifikasi" yang dapat dihapus');
         }
     }
+    public function store_laporankejadian(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id_jeniskejadian' => 'required',
+            'tanggal_kejadian' => 'required|date',
+            'keterangan' => 'required|string',
+            'lokasi_longitude' => 'nullable|numeric',
+            'lokasi_latitude' => 'nullable|numeric',
+            'status' => 'required|in:On_Proses,Selesai,Belum_Diverifikasi',
+        ]);
 
+        $laporanKejadian = new Report();
+        $laporanKejadian->id_user = 2; 
+        $laporanKejadian->id_jeniskejadian = $request->id_jeniskejadian;
+        $laporanKejadian->tanggal_kejadian = $request->tanggal_kejadian;
+        $laporanKejadian->keterangan = $request->keterangan;
+        $laporanKejadian->lokasi_longitude = $request->lokasi_longitude;
+        $laporanKejadian->lokasi_latitude = $request->lokasi_latitude;
+        $laporanKejadian->status = $request->status;
+        $laporanKejadian->save();
+
+        return redirect()->route('relawan-laporankejadian')->with('success', 'Laporan kejadian berhasil ditambahkan.');
+    }
 
     // CREATE, UPDATE, DELETE LAPORAN ASSESSMENT
     public function create_assessment()
     {
-        //
-        return view('relawan.assessment.create'); //
+        $jeniskejadian = JenisKejadian::all();
+        $assess = Assessment::all();
+        $mobilisasisd = MobilisasiSd::all();
+        $giatpmi = GiatPMI::all();
+        $narahubung = PersonilNarahubung::all();
+        $petugasposko = PetugasPosko::all();
+        return view('relawan.assessment.create', compact('jeniskejadian', 'assess', 'mobilisasisd', 'giatpmi', 'narahubung', 'petugasposko')); //
     }
     public function edit_assessment($id)
     {
@@ -88,6 +119,26 @@ class RelawanController extends Controller
         KejadianBencana::findOrFail($id)->delete();
 
         return redirect('relawan/assessment')->with('success', 'Data berhasil dihapus');
+    }
+    public function store_assessment(Request $request)
+    {
+        $validatedData = $request->validate([
+            'id_jeniskejadian' => 'required|exists:jenis_kejadian,id',
+            'tanggal_kejadian' => 'required|date',
+            'keterangan' => 'required|string',
+            // Tambahkan validasi sesuai kebutuhan
+        ]);
+
+        // Simpan data ke database menggunakan model KejadianBencana
+        $kejadianBencana = new KejadianBencana();
+        $kejadianBencana->id_jeniskejadian = $request->id_jeniskejadian;
+        $kejadianBencana->tanggal_kejadian = $request->tanggal_kejadian;
+        $kejadianBencana->keterangan = $request->keterangan;
+        // Tambahkan field lain sesuai kebutuhan
+
+        $kejadianBencana->save();
+
+        return redirect()->route('index-assessment')->with('success', 'Assessment berhasil ditambahkan.');
     }
 
     // CREATE, UPDATE, DELETE LAPORAN SITUASI
